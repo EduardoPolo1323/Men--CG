@@ -1,1 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CREAR UN GRÁFICO DE BARRAS</title>
+</head>
+<body>
 
+<H2>GRÁFICO DE BARRAS</H2>
+<H2>REALIZADO POR: RENZO EDUARDO POLO TACURI</H2>
+
+<canvas id="myCanvas" width="500" height="700" style="border:4px solid black;"></canvas>
+
+<script>
+    var canvas = document.getElementById("myCanvas");
+    var ctx = canvas.getContext("2d");
+
+    // datos de barras
+    var datos = [100, 200, 300, 400, 500];
+    var colores = ["red", "blue", "green", "orange", "purple"];
+
+    // 🏷️ etiquetas manuales
+    var etiquetas = ["50%", "60%", "70%", "95%", "100%"];
+
+    // Dibujar barras
+    var x = 50;
+    var width = 50;
+
+    ctx.font = "14px Arial";
+    ctx.textAlign = "center";
+
+    for (var i = 0; i < datos.length; i++) {
+        var altura = datos[i];
+        var y = canvas.height - altura;
+
+        // barra
+        ctx.beginPath();
+        ctx.rect(x, y, width, altura);
+        ctx.fillStyle = colores[i];
+        ctx.fill();
+        ctx.stroke();
+
+        // 🏷️ texto encima (manual)
+        ctx.fillStyle = "black";
+        ctx.fillText(etiquetas[i], x + width / 2, y - 5);
+
+        x += width + 20;
+    }
+</script>
+
+</body>
+</html>
