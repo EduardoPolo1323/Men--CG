@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Curvas Dinámicas Coseno</title>
+
+<style>
+
+body{
+    text-align:center;
+    font-family:Arial, sans-serif;
+    background:#627ae7;
+}
+
+h2{
+    color:#333;
+}
+
+canvas{
+    border:4px solid black;
+    background:white;
+    display:block;
+    margin:auto;
+    margin-top:20px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h2>CURVAS DINÁMICAS FUNCIÓN COSENO</h2>
+<h2>REALIZADO POR: RENZO EDUARDO POLO TACURI</h2>
+
+<canvas id="myCanvas" width="800" height="400"></canvas>
+
+<script>
+
+var canvas = document.getElementById("myCanvas");
+var ctx = canvas.getContext("2d");
+
+// variables
+var xstart = 0;
+var xend = 800;
+var step = 0.1;
+
+var time = 0;
+var time2 = 2; // desfasada
+
+// función principal
+function drawGraph(){
+
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    // ejes
+    ctx.beginPath();
+    ctx.moveTo(0,200);
+    ctx.lineTo(800,200);
+
+    ctx.moveTo(400,0);
+    ctx.lineTo(400,400);
+
+    ctx.strokeStyle = "red";
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    // primera curva coseno
+    ctx.beginPath();
+    ctx.strokeStyle = "blue";
+    ctx.lineWidth = 3;
+
+    for(var x = xstart; x < xend; x += step){
+
+        var y = Math.cos(x * 0.01 + time);
+
+        if(x === xstart){
+            ctx.moveTo(x,200 - y * 100);
+        }else{
+            ctx.lineTo(x,200 - y * 100);
+        }
+    }
+
+    ctx.stroke();
+
+    // segunda curva coseno desfasada
+    ctx.beginPath();
+    ctx.strokeStyle = "green";
+    ctx.lineWidth = 3;
+
+    for(var x = xstart; x < xend; x += step){
+
+        var y2 = Math.cos(x * 0.01 + time2);
+
+        if(x === xstart){
+            ctx.moveTo(x,200 - y2 * 100);
+        }else{
+            ctx.lineTo(x,200 - y2 * 100);
+        }
+    }
+
+    ctx.stroke();
+}
+
+// animación
+function animate(){
+
+    drawGraph();
+
+    time += 0.02;
+    time2 += 0.02; // mismo ritmo
+
+    requestAnimationFrame(animate);
+}
+
+// iniciar
+animate();
+
+</script>
+
+</body>
+</html>
