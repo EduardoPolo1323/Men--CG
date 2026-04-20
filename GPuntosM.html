@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gráfico de Puntos en Movimiento</title>
+
+<style>
+    body{
+        text-align:center;
+        font-family:Arial, sans-serif;
+        background:#d9f0ff;
+    }
+    
+    h2{
+        color:#333;
+    }
+    
+    #myCanvas{
+        background:white;
+        border:4px solid black;
+        margin-top:20px;
+    }
+</style>
+</head>
+
+<body>
+
+    <h2>GRÁFICO DE PUNTOS EN MOVIMIENTO</h2>
+    <h3>REALIZADO POR: RENZO EDUARDO POLO TACURI</h3>
+    
+    <canvas id="myCanvas" width="700" height="500"></canvas>
+    
+    <script>
+    
+        var canvas = document.getElementById("myCanvas");
+        var ctx = canvas.getContext("2d");
+        
+        // puntos iniciales
+        var puntos = [
+            {x:120, y:100, color:"red"},
+            {x:220, y:180, color:"blue"},
+            {x:320, y:250, color:"green"},
+            {x:420, y:140, color:"orange"},
+            {x:520, y:300, color:"purple"},
+            {x:300, y:520, color:"yellow"}
+        ];
+        
+        // función principal
+        function dibujarGrafico(){
+        
+            // limpiar lienzo
+            ctx.clearRect(0,0,canvas.width,canvas.height);
+        
+            // dibujar ejes
+            ctx.beginPath();
+            ctx.moveTo(50,250);
+            ctx.lineTo(650,250);
+        
+            ctx.moveTo(350,30);
+            ctx.lineTo(350,470);
+        
+            ctx.strokeStyle = "black";
+            ctx.lineWidth = 2;
+            ctx.stroke();
+        
+            // dibujar puntos
+            for(var i = 0; i < puntos.length; i++){
+        
+                // nueva posición aleatoria
+                puntos[i].x = Math.floor(Math.random() * 560) + 70;
+                puntos[i].y = Math.floor(Math.random() * 400) + 50;
+        
+                ctx.beginPath();
+                ctx.arc(puntos[i].x, puntos[i].y, 8, 0, Math.PI * 2);
+        
+                ctx.fillStyle = puntos[i].color;
+                ctx.fill();
+        
+                ctx.stroke();
+        
+                // coordenadas
+                ctx.fillStyle = "black";
+                ctx.font = "12px Arial";
+                ctx.fillText("(" + puntos[i].x + "," + puntos[i].y + ")", puntos[i].x + 10, puntos[i].y - 10);
+            }
+        }
+        
+        // ejecutar al iniciar
+        dibujarGrafico();
+        
+        // actualizar cada segundo
+        setInterval(dibujarGrafico,1000);
+    
+    </script>
+
+</body>
+</html>
