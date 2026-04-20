@@ -1,21 +1,101 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menú de Ejercicios de CG</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Menú de Ejercicios de CG</title>
+
+<style>
+
+body{
+    margin:0;
+    padding:0;
+    font-family:Arial, sans-serif;
+    background:linear-gradient(to right, #74ebd5, #ACB6E5);
+    text-align:center;
+}
+
+h1{
+    margin-top:30px;
+    color:#222;
+    font-size:40px;
+}
+
+h3{
+    color:#333;
+    margin-bottom:30px;
+}
+
+#contenedor{
+    width:500px;
+    margin:auto;
+    background:white;
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 0 15px rgba(0,0,0,0.2);
+}
+
+a{
+    display:block;
+    text-decoration:none;
+    background:#3498db;
+    color:white;
+    padding:14px;
+    margin:10px 0;
+    border-radius:12px;
+    font-size:18px;
+    transition:0.3s;
+}
+
+a:hover{
+    background:#2c80b4;
+    transform:scale(1.03);
+}
+
+footer{
+    margin-top:30px;
+    color:#222;
+    font-weight:bold;
+}
+
+</style>
 </head>
+
 <body>
 
-    <h2>Menú Principal</h2>
+<h1>MENÚ PRINCIPAL</h1>
+<h3>Ejercicios de Computación Gráfica</h3>
 
-    <a href="Ejercicio1.html" target="_self">Ejercicio 1 - Circulo</a><br>
-    <a href="Ejercicio2.html" target="_self">Ejercicio 2 - Cuadrado y Triangulo</a><br>
-    <a href="Ejercicio2-1.html" target="_self">Ejercicio 2 - Modificación</a><br>
-    <a href="Ejercicio3.html" target="_self">Ejercicio 3 - Gráfico de Barras</a><br>
-    <a href="Ejercicio3-1.html" target="_self">Ejercicio 3 - Modificación</a><br>
-    <a href="Ejercicio4.html" target="_self">Ejercicio 4 - Función Matemática</a><br>
-    <a href="Ejercicio6.html" target="_self">GRÁFICO DE LINEA DINÁMICA</a>
+<div id="contenedor">
+
+<a href="Ejercicio1.html">Ejercicio 1 - Círculo</a>
+<a href="Ejercicio2.html">Ejercicio 2 - Cuadrado y Triángulo</a>
+<a href="Ejercicio2-1.html">Ejercicio 2 - Modificación</a>
+<a href="Ejercicio3.html">Ejercicio 3 - Gráfico de Barras</a>
+<a href="Ejercicio3-1.html">Ejercicio 3 - Modificación</a>
+<a href="Ejercicio4.html">Ejercicio 4 - Función Matemática</a>
+<a href="Ejercicio6.html">Gráfico de Línea Dinámica</a>
+<a href="BarrasD.html">Barras Dinámicas</a>
+<a href="GPuntosM.html">Gráfico de Puntos en Movimiento</a>
+<a href="CurvaD-FCoseno.html">Curva Dinámica Función Coseno</a>
+
+</div>
+
+<footer>
+REALIZADO POR: RENZO EDUARDO POLO TACURI
+</footer>
+
+<script>
+
+// efecto al cargar
+document.body.style.opacity = "0";
+
+setTimeout(function(){
+    document.body.style.transition = "1s";
+    document.body.style.opacity = "1";
+},100);
+
+</script>
 
 </body>
 </html>
