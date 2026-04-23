@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Propuesta 3 - Manipulación interactiva de transformaciones 3D en JavaScript</title>
+
+<style>
+/* Estilo general de la página */
+body{
+    margin:0;
+    overflow:hidden;
+    font-family:Arial, sans-serif;
+}
+
+/* Caja informativa de controles */
+#info{
+    position:absolute;
+    top:10px;
+    left:10px;
+    background:rgba(255,255,255,0.85);
+    padding:10px;
+    border-radius:8px;
+    font-size:14px;
+    line-height:1.6;
+}
+</style>
+</head>
+
+<body>
+
+<!-- Información para el usuario -->
+<div id="info">
+<b>Propuesta 3<br>
+Manipulación interactiva de transformaciones 3D en JavaScript</b><br><br>
+
+<b>CONTROLES:</b><br>
+↑ ↓ ← → = Mover cubo<br>
+Q / E = Rotar cubo<br>
+Z = Aumentar tamaño<br>
+X = Reducir tamaño<br>
+    <br><b>Realizado por: RENZO EDUARDO POLO TACURI.</b>
+</div>
+
+<!-- Librería Three.js -->
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+
+<script>
+
+/* ==================================================
+   CREAR ESCENA
+================================================== */
+
+// Crear escena 3D
+const scene = new THREE.Scene();
+
+// Color de fondo
+scene.background = new THREE.Color(0x20232a);
+
+
+/* ==================================================
+   CREAR CÁMARA
+================================================== */
+
+// Cámara en perspectiva
+const camera = new THREE.PerspectiveCamera(
+    75,
+    window.innerWidth / window.innerHeight,
+    0.1,
+    1000
+);
+
+// Alejar cámara para ver objeto
+camera.position.z = 5;
+
+
+/* ==================================================
+   CREAR RENDERIZADOR
+================================================== */
+
+// Renderizador WebGL
+const renderer = new THREE.WebGLRenderer();
+
+// Tamaño pantalla completa
+renderer.setSize(window.innerWidth, window.innerHeight);
+
+// Insertar canvas en body
+document.body.appendChild(renderer.domElement);
+
+
+/* ==================================================
+   CREAR OBJETO PRINCIPAL (CUBO)
+================================================== */
+
+// Geometría del cubo
+const geometry = new THREE.BoxGeometry(1,1,1);
+
+// Material con colores dinámicos
+const material = new THREE.MeshNormalMaterial();
+
+// Crear cubo
+const cubo = new THREE.Mesh(geometry, material);
+
+// Agregar cubo a escena
+scene.add(cubo);
+
+
+/* ==================================================
+   AGREGAR LUZ
+================================================== */
+
+// Luz blanca
+const light = new THREE.PointLight(0xffffff,1);
+
+// Posición de la luz
+light.position.set(5,5,5);
+
+// Agregar luz
+scene.add(light);
+
+
+/* ==================================================
+   CONTROLES DEL TECLADO
+================================================== */
+
+window.addEventListener('keydown', (event)=>{
+
+    switch(event.key){
+
+        /* ------------------------------------------
+           TRASLACIÓN (MOVIMIENTO)
+        ------------------------------------------- */
+
+        case 'ArrowUp':
+            cubo.position.y += 0.2;   // Subir
+            break;
+
+        case 'ArrowDown':
+            cubo.position.y -= 0.2;   // Bajar
+            break;
+
+        case 'ArrowLeft':
+            cubo.position.x -= 0.2;   // Izquierda
+            break;
+
+        case 'ArrowRight':
+            cubo.position.x += 0.2;   // Derecha
+            break;
+
+
+        /* ------------------------------------------
+           ROTACIÓN
+        ------------------------------------------- */
+
+        case 'q':
+        case 'Q':
+            cubo.rotation.y -= 0.1;   // Girar izquierda
+            break;
+
+        case 'e':
+        case 'E':
+            cubo.rotation.y += 0.1;   // Girar derecha
+            break;
+
+
+        /* ------------------------------------------
+           ESCALADO AUMENTAR
+        ------------------------------------------- */
+
+        case 'z':
+        case 'Z':
+
+            cubo.scale.x += 0.1;
+            cubo.scale.y += 0.1;
+            cubo.scale.z += 0.1;
+
+            break;
+
+
+        /* ------------------------------------------
+           ESCALADO REDUCIR
+        ------------------------------------------- */
+
+        case 'x':
+        case 'X':
+
+            // Evita tamaño demasiado pequeño
+            cubo.scale.x = Math.max(0.2, cubo.scale.x - 0.1);
+            cubo.scale.y = Math.max(0.2, cubo.scale.y - 0.1);
+            cubo.scale.z = Math.max(0.2, cubo.scale.z - 0.1);
+
+            break;
+    }
+
+});
+
+
+/* ==================================================
+   FUNCIÓN DE ANIMACIÓN
+================================================== */
+
+function animate(){
+
+    // Ejecutar continuamente
+    requestAnimationFrame(animate);
+
+    // Dibujar escena
+    renderer.render(scene, camera);
+}
+
+// Iniciar animación
+animate();
+
+
+/* ==================================================
+   AJUSTE RESPONSIVO
+================================================== */
+
+window.addEventListener('resize', ()=>{
+
+    // Actualizar proporción cámara
+    camera.aspect = window.innerWidth / window.innerHeight;
+
+    // Aplicar cambios
+    camera.updateProjectionMatrix();
+
+    // Ajustar renderizador
+    renderer.setSize(window.innerWidth, window.innerHeight);
+
+});
+
+</script>
+
+</body>
+</html>
