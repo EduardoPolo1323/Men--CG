@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Propuesta 1 - Traslación animada de un cubo en el espacio 3D</title>
+
+<style>
+/* Estilo general de la página */
+body{
+    margin:0;
+    overflow:hidden;
+    font-family:Arial, sans-serif;
+}
+
+/* Caja informativa */
+#info{
+    position:absolute;
+    top:10px;
+    left:10px;
+    background:rgba(255,255,255,0.85);
+    padding:10px;
+    border-radius:8px;
+    font-size:14px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- Texto informativo -->
+<div id="info">
+    <b>Propuesta 1<br>
+    Traslación animada de un cubo en el espacio 3D</b><br><br>
+    - El cubo se mueve de izquierda a derecha y cambia de dirección al llegar al límite.<br>
+    <br><b>Realizado por: RENZO EDUARDO POLO TACURI.</b>
+</div>
+
+<!-- Librería Three.js -->
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+
+<script>
+
+/* =======================================================
+   CREACIÓN DE LA ESCENA
+======================================================= */
+
+// Crear escena 3D
+const scene = new THREE.Scene();
+
+// Color de fondo
+scene.background = new THREE.Color(0x20232a);
+
+
+/* =======================================================
+   CREACIÓN DE LA CÁMARA
+======================================================= */
+
+// Cámara en perspectiva
+const camera = new THREE.PerspectiveCamera(
+    75,                                 // Ángulo de visión
+    window.innerWidth / window.innerHeight, // Relación pantalla
+    0.1,                                // Distancia mínima
+    1000                                // Distancia máxima
+);
+
+// Alejar cámara para observar el cubo
+camera.position.z = 5;
+
+
+/* =======================================================
+   CREACIÓN DEL RENDERIZADOR
+======================================================= */
+
+// Motor gráfico WebGL
+const renderer = new THREE.WebGLRenderer();
+
+// Ajustar tamaño a toda la pantalla
+renderer.setSize(window.innerWidth, window.innerHeight);
+
+// Insertar canvas en el body
+document.body.appendChild(renderer.domElement);
+
+
+/* =======================================================
+   CREACIÓN DEL CUBO
+======================================================= */
+
+// Geometría del cubo
+const geometry = new THREE.BoxGeometry(1,1,1);
+
+// Material con colores automáticos
+const material = new THREE.MeshNormalMaterial();
+
+// Crear cubo
+const cubo = new THREE.Mesh(geometry, material);
+
+// Agregar cubo a la escena
+scene.add(cubo);
+
+
+/* =======================================================
+   ILUMINACIÓN
+======================================================= */
+
+// Luz puntual blanca
+const light = new THREE.PointLight(0xffffff,1);
+
+// Posición de la luz
+light.position.set(5,5,5);
+
+// Agregar luz
+scene.add(light);
+
+
+/* =======================================================
+   VARIABLES DE MOVIMIENTO
+======================================================= */
+
+// Velocidad del cubo en eje X
+let velocidad = 0.01;
+
+// Límites del recorrido
+let limiteDerecho = 5;
+let limiteIzquierdo = -5;
+
+
+/* =======================================================
+   FUNCIÓN DE ANIMACIÓN
+======================================================= */
+
+function animate(){
+
+    // Repetir animación constantemente
+    requestAnimationFrame(animate);
+
+    /* -----------------------------------------------
+       TRASLACIÓN EN EJE X
+       Se mueve horizontalmente
+    ----------------------------------------------- */
+    cubo.position.x += velocidad;
+
+    /* -----------------------------------------------
+       CAMBIO DE DIRECCIÓN
+       Si llega a un extremo, regresa
+    ----------------------------------------------- */
+
+    if(cubo.position.x >= limiteDerecho || cubo.position.x <= limiteIzquierdo){
+        velocidad *= -1; // Invierte dirección
+    }
+
+    // Dibujar escena
+    renderer.render(scene, camera);
+}
+
+// Iniciar animación
+animate();
+
+
+/* =======================================================
+   AJUSTE RESPONSIVO
+======================================================= */
+
+window.addEventListener('resize', ()=>{
+
+    // Actualizar proporción cámara
+    camera.aspect = window.innerWidth / window.innerHeight;
+
+    // Aplicar cambios
+    camera.updateProjectionMatrix();
+
+    // Ajustar tamaño render
+    renderer.setSize(window.innerWidth, window.innerHeight);
+
+});
+
+</script>
+
+</body>
+</html>
