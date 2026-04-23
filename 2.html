@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Propuesta 2 - Rotación continua de un objeto tridimensional sobre sus ejes</title>
+
+<style>
+/* Estilo general */
+body{
+    margin:0;
+    overflow:hidden;
+    font-family:Arial, sans-serif;
+}
+
+/* Caja informativa */
+#info{
+    position:absolute;
+    top:10px;
+    left:10px;
+    background:rgba(255,255,255,0.85);
+    padding:10px;
+    border-radius:8px;
+    font-size:14px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- Información en pantalla -->
+<div id="info">
+    <b>Propuesta 2<br>
+    Rotación continua de un objeto tridimensional sobre sus ejes</b><br><br>
+    Eje X = giro vertical<br>
+    Eje Y = giro horizontal<br>
+    El cubo rota en ambos ejes al mismo tiempo.<br>
+    <br><b>Realizado por: RENZO EDUARDO POLO TACURI.</b>
+</div>
+
+<!-- Librería Three.js -->
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+
+<script>
+
+/* ===================================================
+   CREAR ESCENA
+=================================================== */
+
+// Crear escena 3D
+const scene = new THREE.Scene();
+
+// Color de fondo
+scene.background = new THREE.Color(0x20232a);
+
+
+/* ===================================================
+   CREAR CÁMARA
+=================================================== */
+
+// Cámara perspectiva
+const camera = new THREE.PerspectiveCamera(
+    75,
+    window.innerWidth / window.innerHeight,
+    0.1,
+    1000
+);
+
+// Posición frontal de la cámara
+camera.position.z = 5;
+
+
+/* ===================================================
+   CREAR RENDERIZADOR
+=================================================== */
+
+// Crear renderizador WebGL
+const renderer = new THREE.WebGLRenderer();
+
+// Ajustar tamaño a pantalla completa
+renderer.setSize(window.innerWidth, window.innerHeight);
+
+// Agregar canvas al body
+document.body.appendChild(renderer.domElement);
+
+
+/* ===================================================
+   CREAR CUBO
+=================================================== */
+
+// Geometría del cubo
+const geometry = new THREE.BoxGeometry(1,1,1);
+
+// Material con colores automáticos
+const material = new THREE.MeshNormalMaterial();
+
+// Crear cubo
+const cubo = new THREE.Mesh(geometry, material);
+
+// Agregar cubo a escena
+scene.add(cubo);
+
+
+/* ===================================================
+   AGREGAR LUZ
+=================================================== */
+
+// Luz blanca puntual
+const light = new THREE.PointLight(0xffffff,1);
+
+// Posición de la luz
+light.position.set(5,5,5);
+
+// Agregar luz a escena
+scene.add(light);
+
+
+/* ===================================================
+   VARIABLES DE ROTACIÓN
+=================================================== */
+
+// Velocidad giro eje X
+let velocidadX = 0.01;
+
+// Velocidad giro eje Y
+let velocidadY = 0.001;
+
+
+/* ===================================================
+   FUNCIÓN ANIMAR
+=================================================== */
+
+function animate(){
+
+    // Repetir continuamente
+    requestAnimationFrame(animate);
+
+    /* -------------------------------------------
+       ROTACIÓN EN EJE X
+       Inclina el cubo hacia arriba/abajo
+    -------------------------------------------- */
+    cubo.rotation.x += velocidadX;
+
+    /* -------------------------------------------
+       ROTACIÓN EN EJE Y
+       Giro izquierda/derecha
+    -------------------------------------------- */
+    cubo.rotation.y += velocidadY;
+
+    // Dibujar escena
+    renderer.render(scene, camera);
+}
+
+// Iniciar animación
+animate();
+
+
+/* ===================================================
+   AJUSTE RESPONSIVO
+=================================================== */
+
+window.addEventListener('resize', ()=>{
+
+    // Actualizar relación cámara
+    camera.aspect = window.innerWidth / window.innerHeight;
+
+    // Aplicar cambios
+    camera.updateProjectionMatrix();
+
+    // Ajustar renderizador
+    renderer.setSize(window.innerWidth, window.innerHeight);
+
+});
+
+</script>
+
+</body>
+</html>
