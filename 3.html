@@ -118,76 +118,87 @@ light.position.set(5,5,5);
 // Agregar luz
 scene.add(light);
 
+/* ==================================================
+   LÍMITES
+================================================== */
+
+// Movimiento máximo
+const LIMITE_X = 3;
+const LIMITE_Y = 2;
+
+// Escala mínima y máxima
+const ESCALA_MIN = 0.2;
+const ESCALA_MAX = 3;
+
+// Rotación máxima opcional
+const ROTACION_MAX = Math.PI * 2;
+
 
 /* ==================================================
-   CONTROLES DEL TECLADO
+   CONTROLES
 ================================================== */
 
 window.addEventListener('keydown', (event)=>{
 
     switch(event.key){
 
-        /* ------------------------------------------
-           TRASLACIÓN (MOVIMIENTO)
-        ------------------------------------------- */
+        /* MOVIMIENTO */
 
         case 'ArrowUp':
-            cubo.position.y += 0.2;   // Subir
+            cubo.position.y = Math.min(LIMITE_Y, cubo.position.y + 0.2);
             break;
 
         case 'ArrowDown':
-            cubo.position.y -= 0.2;   // Bajar
+            cubo.position.y = Math.max(-LIMITE_Y, cubo.position.y - 0.2);
             break;
 
         case 'ArrowLeft':
-            cubo.position.x -= 0.2;   // Izquierda
+            cubo.position.x = Math.max(-LIMITE_X, cubo.position.x - 0.2);
             break;
 
         case 'ArrowRight':
-            cubo.position.x += 0.2;   // Derecha
+            cubo.position.x = Math.min(LIMITE_X, cubo.position.x + 0.2);
             break;
 
-
-        /* ------------------------------------------
-           ROTACIÓN
-        ------------------------------------------- */
+        /* ROTACIÓN */
 
         case 'q':
         case 'Q':
-            cubo.rotation.y -= 0.1;   // Girar izquierda
+            cubo.rotation.y -= 0.1;
+
+            if(cubo.rotation.y < -ROTACION_MAX){
+                cubo.rotation.y = -ROTACION_MAX;
+            }
             break;
 
         case 'e':
         case 'E':
-            cubo.rotation.y += 0.1;   // Girar derecha
+            cubo.rotation.y += 0.1;
+
+            if(cubo.rotation.y > ROTACION_MAX){
+                cubo.rotation.y = ROTACION_MAX;
+            }
             break;
 
-
-        /* ------------------------------------------
-           ESCALADO AUMENTAR
-        ------------------------------------------- */
+        /* AUMENTAR TAMAÑO */
 
         case 'z':
         case 'Z':
 
-            cubo.scale.x += 0.1;
-            cubo.scale.y += 0.1;
-            cubo.scale.z += 0.1;
+            cubo.scale.x = Math.min(ESCALA_MAX, cubo.scale.x + 0.1);
+            cubo.scale.y = Math.min(ESCALA_MAX, cubo.scale.y + 0.1);
+            cubo.scale.z = Math.min(ESCALA_MAX, cubo.scale.z + 0.1);
 
             break;
 
-
-        /* ------------------------------------------
-           ESCALADO REDUCIR
-        ------------------------------------------- */
+        /* REDUCIR TAMAÑO */
 
         case 'x':
         case 'X':
 
-            // Evita tamaño demasiado pequeño
-            cubo.scale.x = Math.max(0.2, cubo.scale.x - 0.1);
-            cubo.scale.y = Math.max(0.2, cubo.scale.y - 0.1);
-            cubo.scale.z = Math.max(0.2, cubo.scale.z - 0.1);
+            cubo.scale.x = Math.max(ESCALA_MIN, cubo.scale.x - 0.1);
+            cubo.scale.y = Math.max(ESCALA_MIN, cubo.scale.y - 0.1);
+            cubo.scale.z = Math.max(ESCALA_MIN, cubo.scale.z - 0.1);
 
             break;
     }
