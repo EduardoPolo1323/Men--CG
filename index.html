@@ -9,7 +9,7 @@
 <style>
 
 /* ==================================================
-   ESTILO GENERAL
+   CONFIGURACIÓN GENERAL
 ================================================== */
 
 *{
@@ -21,12 +21,14 @@
 body{
     font-family:Arial, Helvetica, sans-serif;
     min-height:100vh;
-    background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+    background:
+    radial-gradient(circle at top left,#1e3a8a,#0f172a 40%),
+    radial-gradient(circle at bottom right,#0891b2,#111827 45%);
+    color:white;
     display:flex;
     justify-content:center;
     align-items:center;
-    padding:20px;
-    color:white;
+    padding:25px;
     overflow-x:hidden;
 }
 
@@ -36,69 +38,78 @@ body{
 
 #contenedor{
     width:100%;
-    max-width:750px;
-    background:rgba(255,255,255,0.08);
-    backdrop-filter:blur(10px);
-    border:1px solid rgba(255,255,255,0.15);
-    border-radius:25px;
+    max-width:900px;
     padding:35px;
-    box-shadow:0 15px 35px rgba(0,0,0,0.35);
+    border-radius:28px;
+    background:rgba(255,255,255,0.08);
+    border:1px solid rgba(255,255,255,0.15);
+    backdrop-filter:blur(14px);
+    box-shadow:0 20px 50px rgba(0,0,0,.35);
     animation:entrada 1s ease;
 }
 
 /* ==================================================
-   TÍTULOS
+   CABECERA
 ================================================== */
 
-h1{
-    font-size:42px;
-    margin-bottom:10px;
+header{
     text-align:center;
+    margin-bottom:30px;
 }
 
-h3{
-    text-align:center;
-    font-weight:normal;
-    margin-bottom:30px;
-    color:#d9ecff;
+header h1{
+    font-size:46px;
+    letter-spacing:2px;
+    color:#38bdf8;
+    margin-bottom:10px;
+}
+
+header p{
+    font-size:18px;
+    color:#dbeafe;
 }
 
 /* ==================================================
-   SUBTÍTULOS
+   SECCIONES
 ================================================== */
 
 .seccion{
-    margin:25px 0 12px;
-    font-size:20px;
-    color:#ffd369;
-    border-left:5px solid #ffd369;
-    padding-left:12px;
+    margin:28px 0 15px;
+    padding:12px 18px;
+    border-left:6px solid #facc15;
+    background:rgba(255,255,255,0.05);
+    border-radius:12px;
+    font-size:22px;
+    color:#fde68a;
+    font-weight:bold;
 }
 
 /* ==================================================
-   BOTONES / ENLACES
+   MENÚ
 ================================================== */
 
 .menu{
     display:grid;
-    grid-template-columns:1fr 1fr;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
     gap:15px;
 }
 
-a{
+.menu a{
     text-decoration:none;
     color:white;
-    background:linear-gradient(135deg,#00c6ff,#0072ff);
-    padding:15px;
-    border-radius:14px;
-    font-size:17px;
-    transition:0.3s;
-    box-shadow:0 8px 18px rgba(0,0,0,0.25);
+    padding:16px;
+    border-radius:16px;
+    background:linear-gradient(135deg,#06b6d4,#2563eb);
+    transition:.3s;
+    box-shadow:0 10px 20px rgba(0,0,0,.25);
+    font-size:16px;
+    font-weight:bold;
 }
 
-a:hover{
-    transform:translateY(-4px) scale(1.02);
-    background:linear-gradient(135deg,#ff9966,#ff5e62);
+.menu a:hover{
+    transform:translateY(-5px) scale(1.02);
+    background:linear-gradient(135deg,#f97316,#ef4444);
+    box-shadow:0 18px 25px rgba(0,0,0,.35);
 }
 
 /* ==================================================
@@ -106,10 +117,18 @@ a:hover{
 ================================================== */
 
 footer{
-    margin-top:30px;
+    margin-top:35px;
     text-align:center;
+    padding-top:20px;
+    border-top:1px solid rgba(255,255,255,0.15);
+    color:#cbd5e1;
     font-size:15px;
-    color:#d6e8ff;
+    line-height:1.8;
+}
+
+footer b{
+    color:#ffffff;
+    font-size:17px;
 }
 
 /* ==================================================
@@ -118,12 +137,16 @@ footer{
 
 @media(max-width:700px){
 
-    .menu{
-        grid-template-columns:1fr;
+    #contenedor{
+        padding:22px;
     }
 
-    h1{
-        font-size:32px;
+    header h1{
+        font-size:34px;
+    }
+
+    .seccion{
+        font-size:18px;
     }
 
 }
@@ -150,12 +173,14 @@ footer{
 
 <div id="contenedor">
 
-    <!-- TÍTULO -->
-    <h1>MENÚ PRINCIPAL</h1>
-    <h3>Ejercicios de Computación Gráfica</h3>
+    <!-- CABECERA -->
+    <header>
+        <h1>MENÚ PRINCIPAL</h1>
+        <p>Ejercicios y Actividades de Computación Gráfica</p>
+    </header>
 
-    <!-- SECCIÓN ANTIGUA -->
-    <div class="seccion">Ejercicios anteriores</div>
+    <!-- EJERCICIOS ANTERIORES -->
+    <div class="seccion">📘 Ejercicios Anteriores</div>
 
     <div class="menu">
         <a href="Ejercicio1.html">Ejercicio 1 - Círculo</a>
@@ -170,13 +195,21 @@ footer{
         <a href="CurvaD-FCoseno.html">Curva Dinámica Coseno</a>
     </div>
 
-    <!-- NUEVA SECCIÓN THREE JS -->
-    <div class="seccion">Transformaciones 3D (Three.js)</div>
+    <!-- ACTIVIDAD 5 -->
+    <div class="seccion">🚀 Actividad NRO°5</div>
 
     <div class="menu">
-        <a href="1.html">1.html - Traslación en eje X</a>
-        <a href="2.html">2.html - Rotación continua</a>
-        <a href="3.html">3.html - Traslación + Rotación + Escala</a>
+        <a href="1.html">Transformación 1 - Traslación</a>
+        <a href="2.html">Transformación 2 - Rotación</a>
+        <a href="3.html">Transformación 3 - Escala + Movimiento</a>
+    </div>
+
+    <!-- ACTIVIDAD 6 -->
+    <div class="seccion">📄 Actividad NRO°6</div>
+
+    <div class="menu">
+        <a href="Trabajo.pdf" target="_blank">Ver Trabajo en PDF</a>
+        <a href="Trabajo.pdf" download>Descargar PDF</a>
     </div>
 
     <!-- FOOTER -->
